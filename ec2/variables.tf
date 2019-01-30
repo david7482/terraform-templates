@@ -4,8 +4,9 @@ variable "region" {
 
 variable "ami" {
   type = "map"
+
   default = {
     "ap-northeast-1" = "ami-044c1940d801a38d6"
-    "us-east-1" = "ami-015a7a34dba7c99d6"
+    "us-east-1"      = "ami-015a7a34dba7c99d6"
   }
 }

@@ -6,8 +6,8 @@ provider "aws" {
 # VPC
 ################
 resource "aws_vpc" "main" {
-  cidr_block = "${var.cidr}"
-  enable_dns_support = true
+  cidr_block           = "${var.cidr}"
+  enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = "${merge(map("Name", format("%s", var.name)), var.tags)}"
@@ -35,7 +35,7 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = "${aws_eip.nat.id}"
-  subnet_id = "${aws_subnet.public.0.id}"
+  subnet_id     = "${aws_subnet.public.0.id}"
 
   tags = "${merge(map("Name", format("%s", var.name)), var.tags)}"
 }
@@ -46,9 +46,9 @@ resource "aws_nat_gateway" "ngw" {
 resource "aws_subnet" "public" {
   count = "${length(var.azs)}"
 
-  vpc_id     = "${aws_vpc.main.id}"
-  availability_zone = "${element(var.azs, count.index)}"
-  cidr_block = "${element(var.public_subnets, count.index)}"
+  vpc_id                  = "${aws_vpc.main.id}"
+  availability_zone       = "${element(var.azs, count.index)}"
+  cidr_block              = "${element(var.public_subnets, count.index)}"
   map_public_ip_on_launch = true
 
   tags = "${merge(map("Name", format("%s-public-%s", var.name, element(var.azs, count.index))), var.tags)}"
@@ -60,9 +60,9 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   count = "${length(var.azs)}"
 
-  vpc_id     = "${aws_vpc.main.id}"
-  availability_zone = "${element(var.azs, count.index)}"
-  cidr_block = "${element(var.private_subnets, count.index)}"
+  vpc_id                  = "${aws_vpc.main.id}"
+  availability_zone       = "${element(var.azs, count.index)}"
+  cidr_block              = "${element(var.private_subnets, count.index)}"
   map_public_ip_on_launch = false
 
   tags = "${merge(map("Name", format("%s-private-%s", var.name, element(var.azs, count.index))), var.tags)}"
@@ -94,7 +94,7 @@ resource "aws_route_table" "public" {
 resource "aws_route_table_association" "public" {
   count = "${length(var.azs)}"
 
-  subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
   route_table_id = "${aws_route_table.public.id}"
 }
 
@@ -115,7 +115,7 @@ resource "aws_route_table" "private" {
 resource "aws_route_table_association" "private" {
   count = "${length(var.azs)}"
 
-  subnet_id = "${element(aws_subnet.private.*.id, count.index)}"
+  subnet_id      = "${element(aws_subnet.private.*.id, count.index)}"
   route_table_id = "${aws_route_table.private.id}"
 }
 

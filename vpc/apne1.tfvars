@@ -1,5 +1,5 @@
 region = "ap-northeast-1"
-name = "myvpc"
+name = "david74-vpc"
 tags = {
   "Environment" = "internal"
   "Purpose" = "test"

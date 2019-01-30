@@ -7,7 +7,7 @@ variable "name" {
 }
 
 variable "tags" {
-  type = "map"
+  type    = "map"
   default = {}
 }
 
@@ -16,16 +16,16 @@ variable "cidr" {
 }
 
 variable "azs" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
 variable "public_subnets" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
 variable "private_subnets" {
-  type = "list"
+  type    = "list"
   default = []
 }

@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "helloworld" {
-  ami = "${lookup(var.ami, var.region)}"
+  ami           = "${lookup(var.ami, var.region)}"
   instance_type = "t2.micro"
 }
 
