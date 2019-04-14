@@ -6,7 +6,7 @@ variable "ami" {
   type = "map"
 
   default = {
-    "ap-northeast-1" = "ami-0c5c5f2328012a2d4"
-    "us-east-1"      = "ami-0a50b5b2d99760cf2"
+    "ap-northeast-1" = "ami-0ad15a5a72c4f8bb6"
+    "us-east-1"      = "ami-0fa3a798d9d07f987"
   }
 }
