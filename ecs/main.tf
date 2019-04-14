@@ -23,6 +23,38 @@ data "template_file" "helloworld_http" {
   }
 }
 
+module "container_definition_helloworld_http" {
+  source = "github.com/cloudposse/terraform-aws-ecs-container-definition"
+
+  container_name   = "web"
+  container_image  = "${var.app_image}"
+  essential        = "true"
+  container_cpu    = "${var.fargate_cpu}"
+  container_memory = "${var.fargate_memory}"
+  log_driver       = "awslogs"
+
+  log_options = {
+    awslogs-group         = "${aws_cloudwatch_log_group.log_group.name}"
+    awslogs-region        = "${var.region}"
+    awslogs-stream-prefix = "${local.helloworld_ecs_service_name}"
+  }
+
+  port_mappings = [
+    {
+      containerPort = "${var.app_port}"
+      protocol      = "tcp"
+    },
+  ]
+
+  ulimits = [
+    {
+      name      = "nofile"
+      hardLimit = 102400
+      softLimit = 102400
+    },
+  ]
+}
+
 resource "aws_ecs_task_definition" "helloworld_http" {
   family = "${local.helloworld_ecs_td_name}"
 
@@ -32,7 +64,7 @@ resource "aws_ecs_task_definition" "helloworld_http" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "${var.fargate_cpu}"
   memory                   = "${var.fargate_memory}"
-  container_definitions    = "${data.template_file.helloworld_http.rendered}"
+  container_definitions    = "${module.container_definition_helloworld_http.json}"
 }
 
 ################################
