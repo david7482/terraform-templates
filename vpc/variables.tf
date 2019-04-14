@@ -1,5 +1,5 @@
 variable "region" {
-  default = "ap-northeast-1"
+  default = ""
 }
 
 variable "name" {

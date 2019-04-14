@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "${var.region}"
-}
-
 ################
 # VPC
 ################
@@ -51,7 +47,11 @@ resource "aws_subnet" "public" {
   cidr_block              = "${element(var.public_subnets, count.index)}"
   map_public_ip_on_launch = true
 
-  tags = "${merge(map("Name", format("%s-public-%s", var.name, element(var.azs, count.index))), var.tags)}"
+  tags {
+    Name        = "${format("%s-public-%s", var.name, element(var.azs, count.index))}"
+    Environment = "internal"
+    Purpose     = "public-subnet"
+  }
 }
 
 ################
@@ -65,7 +65,11 @@ resource "aws_subnet" "private" {
   cidr_block              = "${element(var.private_subnets, count.index)}"
   map_public_ip_on_launch = false
 
-  tags = "${merge(map("Name", format("%s-private-%s", var.name, element(var.azs, count.index))), var.tags)}"
+  tags {
+    Name        = "${format("%s-private-%s", var.name, element(var.azs, count.index))}"
+    Environment = "internal"
+    Purpose     = "private-subnet"
+  }
 }
 
 ########################
