@@ -9,20 +9,6 @@ locals {
 ################################
 # ECS Task Definition
 ################################
-data "template_file" "helloworld_http" {
-  template = "${file("templates/helloworld-http.json.tpl")}"
-
-  vars {
-    aws_region     = "${var.region}"
-    aws_log_group  = "${aws_cloudwatch_log_group.log_group.name}"
-    aws_log_prefix = "${local.helloworld_ecs_service_name}"
-    fargate_cpu    = "${var.fargate_cpu}"
-    fargate_memory = "${var.fargate_memory}"
-    app_image      = "${var.app_image}"
-    app_port       = "${var.app_port}"
-  }
-}
-
 module "container_definition_helloworld_http" {
   source = "github.com/cloudposse/terraform-aws-ecs-container-definition"
 

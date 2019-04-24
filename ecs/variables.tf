@@ -38,7 +38,7 @@ variable "fargate_memory" {
 }
 
 variable "app_image" {
-  default = ""
+  default = "nginxdemos/hello"
 }
 
 variable "app_port" {

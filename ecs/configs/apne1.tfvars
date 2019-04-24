@@ -10,5 +10,3 @@ tags = {
 }
 
 vpc_id = "vpc-082dbb29a6ce26f40"
-
-app_image = "nginxdemos/hello"
