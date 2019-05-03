@@ -15,8 +15,8 @@ plan: check
 
 apply: check
 	terraform workspace select $(ENV)
-	terraform apply -var-file configs/$(ENV).tfvars -auto-approve
+	terraform apply -var-file configs/$(ENV).tfvars
 
 destroy: check
 	terraform workspace select $(ENV)
-	terraform destroy -var-file configs/$(ENV).tfvars -auto-approve
+	terraform destroy -var-file configs/$(ENV).tfvars
