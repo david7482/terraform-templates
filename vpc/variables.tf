@@ -7,7 +7,7 @@ variable "name" {
 }
 
 variable "tags" {
-  type    = "map"
+  type    = map(string)
   default = {}
 }
 
@@ -16,16 +16,16 @@ variable "cidr" {
 }
 
 variable "azs" {
-  type    = "list"
+  type    = list(string)
   default = []
 }
 
 variable "public_subnets" {
-  type    = "list"
+  type    = list(string)
   default = []
 }
 
 variable "private_subnets" {
-  type    = "list"
+  type    = list(string)
   default = []
 }
